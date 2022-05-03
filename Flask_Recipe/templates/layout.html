@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <head>
+            {% if title %}
+            <title>Dan's Recipe Book |  {% title %}</title>
+            {% else %}
+            <title>Dan's Recipe Book</title>
+            {% endif %}
+        </head>
+    </head>
+    <body>
+        {% block content %} {% endblock content %}
+    </body>
+</html>

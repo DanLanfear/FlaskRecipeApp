@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>
-
-        </title>
-    </head>
-    <body>
-        <h1>
-            Home Page
-        </h1>
-    </body>
-</html>
+{% extends "layout.html" %}
+{% block content %}
+    {% for recipe in recipes %}
+        <h1>{{ recipe.title }}</h1>
+        <p> By  {{ recipe.author }} on {{ recipe.date_posted }}</p>
+        <p> Total cook time: {{ recipe.prep_time + recipe.cook_time }}</p>
+    {% endfor %}
+{% endblock content %}
