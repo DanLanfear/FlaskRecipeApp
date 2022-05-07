@@ -74,7 +74,7 @@ def account():
 
 @app.route("/recipe/new", methods=['GET','POST'])
 @login_required
-def new_recippe():
+def new_recipe():
     form = RecipeForm()
     if form.validate_on_submit():
         recipe = Recipe(title=form.title.data, time=form.time.data, description = form.description.data, author=current_user)
@@ -108,7 +108,7 @@ def update_recipe(recipe_id):
     if recipe.author != current_user:
         abort(403)
     form = RecipeForm()
-    
+
     if form.validate_on_submit():
         recipe.title= form.title.data
         recipe.time = form.time.data
@@ -143,3 +143,16 @@ def update_recipe(recipe_id):
 
     return render_template('create_recipe.html', title='Update Recipe', form=form, legend='Update Recipe')
 
+
+@app.route("/recipe/<int:recipe_id>/delete",  methods=['POST'])
+@login_required
+def delete_recipe(recipe_id):
+    recipe = Recipe.query.get_or_404(recipe_id)
+    if recipe.author != current_user:
+        abort(403)
+    Ingredient.query.filter_by(recipe=recipe).delete()
+    Step.query.filter_by(recipe=recipe).delete()
+    db.session.delete(recipe)
+    db.session.commit()
+    flash('Your recipe has been deleted', 'success')
+    return redirect(url_for('home'))
