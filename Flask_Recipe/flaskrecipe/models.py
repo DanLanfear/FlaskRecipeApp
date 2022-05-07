@@ -1,4 +1,3 @@
-from sqlalchemy import false
 from flaskrecipe import db, login_manager
 from datetime import datetime
 from flask_login import UserMixin
@@ -38,6 +37,9 @@ class Step(db.Model):
     recipe_id = db.Column(db.Integer, db.ForeignKey('recipe.id'))
     step = db.Column(db.Text, nullable=False)
     step_number = db.Column(db.Integer, nullable=False)
+    
+    def __repr__(self):
+        return f"Step('{self.step_number}', '{self.step}')"
     
 
 class Ingredient(db.Model):

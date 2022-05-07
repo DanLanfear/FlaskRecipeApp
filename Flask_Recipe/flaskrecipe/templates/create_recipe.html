@@ -50,19 +50,18 @@
             {% endif %}
             </div>
 
-
             <div class="form-group">
                 {{ form.ingredients.label(class="form-control-label") }}
                 {% for ingredient in form.ingredients %}
                     {% if ingredient.errors %}
-                        {{ ingredient(class="form-control form-control-lg is-invalid") }}
+                        {{ ingredient(class="form-control is-invalid") }}
                         <div class="invalid-feedback">
                             {% for error in ingredient.errors %}
                                 <span>{{ error }}</span>
                             {% endfor %}
                         </div>
                     {% else %}
-                        {{ ingredient(class="form-control form-control-lg") }}
+                        {{ ingredient(class="form-control") }}
                     {% endif %}
                 {% endfor %}
             </div>
@@ -71,14 +70,14 @@
                 {{ form.steps.label(class="form-control-label") }}
                 {% for step in form.steps %}
                     {% if step.errors %}
-                        {{ step(class="form-control form-control-lg is-invalid") }}
+                        {{ step(class="form-control is-invalid") }}
                         <div class="invalid-feedback">
                             {% for error in step.errors %}
                                 <span>{{ error }}</span>
                             {% endfor %}
                         </div>
                     {% else %}
-                        {{ step(class="form-control form-control-lg") }}
+                            {{ step(class="form-control") }}
                     {% endif %}
                 {% endfor %}
             </div>

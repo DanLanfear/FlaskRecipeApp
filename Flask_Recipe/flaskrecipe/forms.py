@@ -1,9 +1,3 @@
-from ast import Sub
-from locale import currency
-from tokenize import String
-from turtle import title
-from typing import Text
-from flask import Flask
 from flask_wtf import FlaskForm
 from wtforms import StringField, BooleanField, PasswordField, SubmitField, FloatField, IntegerField, TextAreaField, Form, FormField, FieldList
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
@@ -63,7 +57,7 @@ class UpdateAccountForm(FlaskForm):
 
 
 class IngredientForm(Form):
-    ingredient = TextAreaField('Ingredient', validators=[DataRequired()])
+    ingredient = StringField('Ingredient', validators=[DataRequired(), Length(min=0, max=60)])
     quantity = FloatField('Quantity', validators=[DataRequired()])
     quantity_label = StringField('Label', validators=[DataRequired(), Length(min=0, max=15)])
 
@@ -76,7 +70,7 @@ class RecipeForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     time = IntegerField('Time in Minutes', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
-    ingredients = FieldList(FormField(IngredientForm), label='Ingredients', min_entries=1,max_entries=20)
-    steps = FieldList(FormField(StepForm), label='Steps', min_entries=1, max_entries=15)
+    ingredients = FieldList(FormField(IngredientForm), label='Ingredients', min_entries=15, max_entries=15)
+    steps = FieldList(FormField(StepForm), label='Steps', min_entries=15, max_entries=15)
 
     submit = SubmitField('Create')
