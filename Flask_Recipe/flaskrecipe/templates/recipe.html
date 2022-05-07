@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block content %}
+    <article class="media content-section">
+        <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" href="#">{{ recipe.author.username }}</a>
+            <small class="text-muted">{{ recipe.date_posted.strftime('%Y-%m-%d') }}</small>
+        </div>
+        <h2 class="article-title">{{ recipe.title }}</h2>
+        <p class="article-content">{{ recipe.description }}</p>
+        </div>
+    </article>
+{% endblock content %}

@@ -1,4 +1,4 @@
-from flask import render_template, url_for, flash, redirect, request
+from flask import render_template, url_for, flash, redirect, request, abort
 from flaskrecipe.models import User, Recipe, Ingredient, Step
 from flaskrecipe.forms import RecipeForm, RegistrationForm, LoginForm, UpdateAccountForm, IngredientForm, StepForm
 from flaskrecipe import app, db, bcrypt
@@ -92,4 +92,54 @@ def new_recippe():
         db.session.commit()
         flash('Recipe submitted', 'success')
         return redirect(url_for('home'))
-    return render_template('create_recipe.html', title='New Recipe', form=form)
+    return render_template('create_recipe.html', title='New Recipe', form=form, legend='Create Recipe')
+
+
+@app.route("/recipe/<int:recipe_id>")
+def recipe(recipe_id):
+    recipe = Recipe.query.get_or_404(recipe_id)
+    return render_template('recipe.html', title=recipe.title, recipe=recipe)
+
+
+@app.route("/recipe/<int:recipe_id>/update",  methods=['GET','POST'])
+@login_required
+def update_recipe(recipe_id):
+    recipe = Recipe.query.get_or_404(recipe_id)
+    if recipe.author != current_user:
+        abort(403)
+    form = RecipeForm()
+    
+    if form.validate_on_submit():
+        recipe.title= form.title.data
+        recipe.time = form.time.data
+        recipe.description = form.description.data
+        Ingredient.query.filter_by(recipe=recipe).delete()
+        for field in form.ingredients:
+            ingredient = Ingredient(ingredient=field.ingredient.data, quantity=field.quantity.data, 
+                                    quantity_label=field.quantity_label.data, recipe=Recipe.query.filter_by(title=recipe.title).first())
+            db.session.add(ingredient)
+        Step.query.filter_by(recipe=recipe).delete()
+        num = 1
+        for field in form.steps:
+            step = Step(step=field.step.data, step_number=num, recipe=Recipe.query.filter_by(title=recipe.title).first())
+            db.session.add(step)
+            num += 1
+        db.session.commit()
+        flash('Your recipe has been updated', 'success')
+        return redirect(url_for('recipe', recipe_id=recipe.id))
+
+    elif request.method == 'GET':
+        form.title.data = recipe.title
+        form.time.data = recipe.time
+        form.description.data = recipe.description
+        ingredient_list = Ingredient.query.filter_by(recipe=recipe).all()
+        for i in range(len(ingredient_list)):
+            form.ingredients[i].ingredient.data = ingredient_list[i].ingredient
+            form.ingredients[i].quantity.data = ingredient_list[i].quantity
+            form.ingredients[i].quantity_label.data = ingredient_list[i].quantity_label
+        step_list = Step.query.filter_by(recipe=recipe).all()
+        for i in range(len(step_list)):
+            form.steps[i].step.data = step_list[i].step
+
+    return render_template('create_recipe.html', title='Update Recipe', form=form, legend='Update Recipe')
+

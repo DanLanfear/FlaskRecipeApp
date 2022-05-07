@@ -5,7 +5,7 @@ from turtle import title
 from typing import Text
 from flask import Flask
 from flask_wtf import FlaskForm
-from wtforms import StringField, BooleanField, PasswordField, SubmitField,IntegerField, TextAreaField, Form, FormField, FieldList
+from wtforms import StringField, BooleanField, PasswordField, SubmitField, FloatField, IntegerField, TextAreaField, Form, FormField, FieldList
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from flaskrecipe.models import User
 from flask_login import current_user
@@ -64,7 +64,7 @@ class UpdateAccountForm(FlaskForm):
 
 class IngredientForm(Form):
     ingredient = TextAreaField('Ingredient', validators=[DataRequired()])
-    quantity = IntegerField('Quantity', validators=[DataRequired()])
+    quantity = FloatField('Quantity', validators=[DataRequired()])
     quantity_label = StringField('Label', validators=[DataRequired(), Length(min=0, max=15)])
 
 
