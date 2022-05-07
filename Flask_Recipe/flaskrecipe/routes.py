@@ -1,50 +1,14 @@
 from flask import render_template, url_for, flash, redirect, request
 from flaskrecipe.models import User, Recipe, Ingredient, Step
-from flaskrecipe.forms import RegistrationForm, LoginForm, UpdateAccountForm
+from flaskrecipe.forms import RecipeForm, RegistrationForm, LoginForm, UpdateAccountForm, IngredientForm, StepForm
 from flaskrecipe import app, db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
-
-recipes = [
-    {
-        'author': 'Dan',
-        'title': 'Chicken',
-        'time': 10,
-        'ingredients': [
-            'chicken', 
-            'pam'
-        ],
-        'steps': [
-            'turn on grill',
-            'spray pam on chicken',
-            'cook chicken for 7 minutes'
-        ],
-        'date_posted': 'April 20, 2018',
-        'rating': 4,
-        'favorite': True
-    },
-    {
-        'author': 'Gab',
-        'title': 'Beef',
-        'time': 15,
-        'ingredients': [
-            'beef', 
-            'cheese'
-        ],
-        'steps': [
-            'ground the beef',
-            'cover in cheese',
-            'cook over an open fire'
-        ],
-        'date_posted': 'April 22, 2018',
-        'rating': 5,
-        'favorite': False
-    }
-]
 
 
 @app.route("/home")
 @app.route("/")
 def home():
+    recipes = Recipe.query.all()
     return render_template('home.html', recipes=recipes)
 
 
@@ -106,3 +70,26 @@ def account():
         form.username.data = current_user.username
         form.email.data = current_user.email
     return render_template('account.html', title='Account', form=form)
+
+
+@app.route("/recipe/new", methods=['GET','POST'])
+@login_required
+def new_recippe():
+    form = RecipeForm()
+    if form.validate_on_submit():
+        recipe = Recipe(title=form.title.data, time=form.time.data, description = form.description.data, author=current_user)
+        db.session.add(recipe)
+        db.session.commit()
+        for field in form.ingredients:
+            ingredient = Ingredient(ingredient=field.ingredient.data, quantity=field.quantity.data, 
+                                    quantity_label=field.quantity_label.data, recipe=Recipe.query.filter_by(title=recipe.title).first())
+            db.session.add(ingredient)
+        num = 1
+        for field in form.steps:
+            step = Step(step=field.step.data, step_number=num, recipe=Recipe.query.filter_by(title=recipe.title).first())
+            db.session.add(step)
+            num += 1
+        db.session.commit()
+        flash('Recipe submitted', 'success')
+        return redirect(url_for('home'))
+    return render_template('create_recipe.html', title='New Recipe', form=form)

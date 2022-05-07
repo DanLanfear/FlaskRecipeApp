@@ -1,3 +1,4 @@
+from sqlalchemy import false
 from flaskrecipe import db, login_manager
 from datetime import datetime
 from flask_login import UserMixin
@@ -29,13 +30,14 @@ class Recipe(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     
     def __repr__(self):
-        return f"Recipe('{self.title}', '{self.date_posted}')"
+        return f"Recipe('{self.title}', '{self.description}')"
 
 
 class Step(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     recipe_id = db.Column(db.Integer, db.ForeignKey('recipe.id'))
     step = db.Column(db.Text, nullable=False)
+    step_number = db.Column(db.Integer, nullable=False)
     
 
 class Ingredient(db.Model):
@@ -43,7 +45,7 @@ class Ingredient(db.Model):
     recipe_id = db.Column(db.Integer, db.ForeignKey('recipe.id'))
     ingredient = db.Column(db.Text, nullable=False)
     quantity = db.Column(db.Float, nullable=False)
-    label = db.Column(db.String(15), nullable=False)
+    quantity_label = db.Column(db.String(15), nullable=False)
     
     def __repr__(self):
-        return f"Ingredient('{self.ingredient}', '{self.quantity} {self.label}')"
+        return f"Ingredient('{self.ingredient}', '{self.quantity} {self.quantity_label}')"
