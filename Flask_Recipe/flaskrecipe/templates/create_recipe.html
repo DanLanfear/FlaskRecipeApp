@@ -50,7 +50,7 @@
             {% endif %}
             </div>
 
-            <div class="form-group" datatoggle="fieldset" id="ingredient-fieldset">
+            <div class="form-group" data-toggle="fieldset" id="ingredient-fieldset">
                 <button type="button" data-toggle="fieldset-add-row" data-target="#ingredient-fieldset">+</button>
                 {{ form.ingredients.label(class="form-control-label") }}
                 {% for ingredient in form.ingredients %}
@@ -70,7 +70,7 @@
                 {% endfor %}
             </div>
             
-            <div class="form-group" datatoggle="fieldset" id="step-fieldset">
+            <div class="form-group" data-toggle="fieldset" id="step-fieldset">
                 <button type="button" data-toggle="fieldset-add-row" data-target="#step-fieldset">+</button>
                 {{ form.steps.label(class="form-control-label") }}
                 {% for step in form.steps %}
@@ -96,5 +96,5 @@
     </form>
   </div>
   <script src="https://code.jquery.com/jquery-1.10.2.min.js" integrity="sha256-C6CB9UYIS9UJeqinPHWTHVqh/E1uhG5Twh+Y5qFQmYg=" crossorigin="anonymous"></script>
-  <script src="{{ url_for("static", filename="js/page.js") }}"></script>
+  <script src="{{ url_for("static", filename="page.js") }}"></script>
 {% endblock content %}
