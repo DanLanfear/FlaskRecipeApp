@@ -63,14 +63,14 @@ class IngredientForm(Form):
 
 
 class StepForm(Form):
-    step = TextAreaField('Step', validators=[DataRequired()])
+    step = TextAreaField('Step', )
 
 
 class RecipeForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     time = IntegerField('Time in Minutes', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
-    ingredients = FieldList(FormField(IngredientForm), label='Ingredients', min_entries=15, max_entries=15)
-    steps = FieldList(FormField(StepForm), label='Steps', min_entries=15, max_entries=15)
+    ingredients = FieldList(FormField(IngredientForm), label='Ingredients', min_entries=1, max_entries=15)
+    steps = FieldList(FormField(StepForm), label='Steps', min_entries=1, max_entries=15)
 
     submit = SubmitField('Create')

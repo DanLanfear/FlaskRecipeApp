@@ -50,35 +50,43 @@
             {% endif %}
             </div>
 
-            <div class="form-group">
+            <div class="form-group" datatoggle="fieldset" id="ingredient-fieldset">
+                <button type="button" data-toggle="fieldset-add-row" data-target="#ingredient-fieldset">+</button>
                 {{ form.ingredients.label(class="form-control-label") }}
                 {% for ingredient in form.ingredients %}
-                    {% if ingredient.errors %}
-                        {{ ingredient(class="form-control is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in ingredient.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ ingredient(class="form-control") }}
-                    {% endif %}
+                    <div data-toggle="fieldset-entry">
+                        {% if ingredient.errors %}
+                            {{ ingredient(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in ingredient.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ ingredient(class="form-control") }}
+                        {% endif %}
+                        <button type="button" data-toggle="fieldset-remove-row" id="ingredient-{{loop.index0}}-remove">-</button>
+                    </div>
                 {% endfor %}
             </div>
             
-            <div class="form-group">
+            <div class="form-group" datatoggle="fieldset" id="step-fieldset">
+                <button type="button" data-toggle="fieldset-add-row" data-target="#step-fieldset">+</button>
                 {{ form.steps.label(class="form-control-label") }}
                 {% for step in form.steps %}
-                    {% if step.errors %}
-                        {{ step(class="form-control is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in step.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                            {{ step(class="form-control") }}
-                    {% endif %}
+                    <div data-toggle="fieldset-entry">
+                        {% if step.errors %}
+                            {{ step(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in step.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                                {{ step(class="form-control") }}
+                        {% endif %}
+                        <button type="button" data-toggle="fieldset-remove-row" id="step-{{loop.index0}}-remove">-</button>
+                    </div>
                 {% endfor %}
             </div>
         </fieldset>
@@ -87,4 +95,6 @@
         </div>
     </form>
   </div>
+  <script src="https://code.jquery.com/jquery-1.10.2.min.js" integrity="sha256-C6CB9UYIS9UJeqinPHWTHVqh/E1uhG5Twh+Y5qFQmYg=" crossorigin="anonymous"></script>
+  <script src="{{ url_for("static", filename="js/page.js") }}"></script>
 {% endblock content %}
