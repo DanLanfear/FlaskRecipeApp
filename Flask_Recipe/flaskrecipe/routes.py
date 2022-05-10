@@ -133,17 +133,19 @@ def update_recipe(recipe_id):
         form.time.data = recipe.time
         form.description.data = recipe.description
         ingredient_list = Ingredient.query.filter_by(recipe=recipe).all()
-        # for i in range(len(ingredient_list)):
-        #     form.ingredients[i].ingredient.data = ingredient_list[i].ingredient
-        #     form.ingredients[i].quantity.data = ingredient_list[i].quantity
-        #     form.ingredients[i].quantity_label.data = ingredient_list[i].quantity_label
         for ingredient in ingredient_list:
-            form.ingredients.append_entry(ingredient)
+            if(form.ingredients.entries[0].ingredient.data == None):
+                form.ingredients.entries[0].ingredient.data = ingredient.ingredient
+                form.ingredients.entries[0].quantity.data = ingredient.quantity
+                form.ingredients.entries[0].quantity_label.data = ingredient.quantity_label
+            else:
+                form.ingredients.append_entry(ingredient)
         step_list = Step.query.filter_by(recipe=recipe).all()
         for step in step_list:
-            form.steps.append_entry(step)
-        # for i in range(len(step_list)):
-        #     form.steps[i].step.data = step_list[i].step
+            if step.step_number == 1:
+                form.steps.entries[0].step.data = step.step
+            else:
+                form.steps.append_entry(step)
 
     return render_template('create_recipe.html', title='Update Recipe', form=form, legend='Update Recipe')
 
