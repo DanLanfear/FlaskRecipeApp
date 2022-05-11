@@ -63,7 +63,7 @@ class IngredientForm(Form):
 
 
 class StepForm(Form):
-    step = TextAreaField('Step', )
+    step = TextAreaField('Step', validators=[DataRequired()] )
 
 
 class RecipeForm(FlaskForm):

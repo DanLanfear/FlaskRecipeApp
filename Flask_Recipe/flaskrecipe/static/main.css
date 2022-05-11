@@ -80,21 +80,29 @@ body {
   }
 
   tbody {
-    display:block;
     width:100%;
   }
   table{
     border-collapse: collapse;
     min-width: 100%;
   }
+  table.no-header tbody tr th{
+    display:none;
+  }
 
-  td.entry {
+  table tbody tr {
+    min-width:100%;
+
+  }
+
+  td {
     width:95%;
   }
   td.button{
     vertical-align: top;
   }
 
-  textarea.no-resize {
+  textarea {
     resize: none;
+    width: 100%;
   }

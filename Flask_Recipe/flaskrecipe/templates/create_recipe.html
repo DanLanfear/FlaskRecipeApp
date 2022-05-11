@@ -50,8 +50,7 @@
             {% endif %}
             </div>
 
-            <div class="form-group" data-toggle="fieldset" id="ingredient-fieldset">
-                <button type="button" data-toggle="fieldset-add-row" data-target="#ingredient-fieldset">+</button>
+            <div class="form-group border-bottom" data-toggle="fieldset" id="ingredient-fieldset">
                 {{ form.ingredients.label(class="form-control-label") }}
                 {% for ingredient in form.ingredients %}
                     <div data-toggle="fieldset-entry">
@@ -65,30 +64,61 @@
                         {% else %}
                             {{ ingredient(class="form-control") }}
                         {% endif %}
-                        <button type="button" data-toggle="fieldset-remove-row" id="ingredient-{{loop.index0}}-remove">-</button>
+                        <button class="btn btn-outline-danger mb-3" type="button" data-toggle="fieldset-remove-row" id="ingredient-{{loop.index0}}-remove">Remove</button>
                     </div>
                 {% endfor %}
+                <button class="btn btn-outline-primary mb-1 mt-2" type="button" data-toggle="fieldset-add-row" data-target="#ingredient-fieldset">Add</button>
             </div>
             
 
 
-            <div class="form-group mb-4" data-toggle="fieldset" id="step-fieldset">
+            <!-- <div class="form-group mb-4" data-toggle="fieldset" id="step-fieldset">
                 {{ form.steps.label(class="form-control-label") }}
                 <table>
                     <tbody>
                         {% for i in range(form.steps.entries|length) %}
                             <tr data-toggle="fieldset-entry">
                                 <td class="entry">
-                                    <textarea class="form-control no-resize" name="steps-{{loop.index0}}-step" id="steps-{{loop.index0}}-step">{{form.steps.entries[i].step.data}}</textarea>
+                                    {% if form.steps.entries[i].errors %}
+                                        <textarea class="form-control no-resize is-invalid" name="steps-{{loop.index0}}-step" id="steps-{{loop.index0}}-step">{{form.steps.entries[i].step.data}}</textarea>
+                                        <div class="invalid-feedback">
+                                            {% for error in form.steps.entries[i].errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        <textarea class="form-control no-resize" name="steps-{{loop.index0}}-step" id="steps-{{loop.index0}}-step">{{form.steps.entries[i].step.data}}</textarea>
+                                    {% endif %}
                                 </td>
                                 <td class="button">
-                                    <button class="btn btn-outline-danger align-text-top" type="button" data-toggle="fieldset-remove-row" id="step-{{loop.index0}}-remove">Remove</button>
+                                    <button class="btn btn-outline-danger" type="button" data-toggle="fieldset-remove-row" id="step-{{loop.index0}}-remove">Remove</button>
                                 </td>
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
                 <button class="btn btn-outline-primary mt-2" type="button" data-toggle="fieldset-add-row" data-target="#step-fieldset">Add</button>
+            </div> -->
+
+            <div class="form-group mb-4 mt-4" data-toggle="fieldset" id="step-fieldset">
+                {{ form.steps.label(class="form-control-label ") }}
+                {% for step in form.steps %}
+                    <div data-toggle="fieldset-entry">
+                        {% if step.errors %}
+                            {{ step(class="form-control is-invalid no-header") }}
+                            <div class="invalid-feedback">
+                                {% for error in step.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ step(class="no-header") }}
+                        {% endif %}
+                            <button class="btn btn-outline-danger mb-3" type="button" data-toggle="fieldset-remove-row" id="step-{{loop.index0}}-remove">Remove</button>
+                    </div>
+                {% endfor %}
+                <button class="btn btn-outline-primary mt-2" type="button" data-toggle="fieldset-add-row" data-target="#step-fieldset">Add</button>
+
             </div>
 
             <!-- <div class="form-group" data-toggle="fieldset" id="step-fieldset">
