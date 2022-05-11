@@ -70,7 +70,26 @@
                 {% endfor %}
             </div>
             
-            <div class="form-group" data-toggle="fieldset" id="step-fieldset">
+
+
+            <div class="form-group mb-4" data-toggle="fieldset" id="step-fieldset">
+                {{ form.steps.label(class="form-control-label") }}
+                <table>
+                {% for i in range(form.steps.entries|length) %}
+                    <tr data-toggle="fieldset-entry">
+                        <td>
+                            <textarea class="form-control" name="steps-{{loop.index0}}-step" id="steps-{{loop.index0}}-step">{{form.steps.entries[i].step.data}}</textarea>
+                        </td>
+                        <td>
+                            <button class="btn btn-outline-danger" type="button" data-toggle="fieldset-remove-row" id="step-{{loop.index0}}-remove">Remove</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </table>
+                <button class="btn btn-outline-primary" type="button" data-toggle="fieldset-add-row" data-target="#step-fieldset">Add</button>
+            </div>
+
+            <!-- <div class="form-group" data-toggle="fieldset" id="step-fieldset">
                 <button type="button" data-toggle="fieldset-add-row" data-target="#step-fieldset">+</button>
                 {{ form.steps.label(class="form-control-label") }}
                 {% for step in form.steps %}
@@ -88,7 +107,7 @@
                         <button type="button" data-toggle="fieldset-remove-row" id="step-{{loop.index0}}-remove">-</button>
                     </div>
                 {% endfor %}
-            </div>
+            </div> -->
         </fieldset>
         <div class="form-group">
             {{ form.submit(class="btn btn-outline-info") }}
