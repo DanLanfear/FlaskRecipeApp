@@ -73,4 +73,4 @@ class RecipeForm(FlaskForm):
     ingredients = FieldList(FormField(IngredientForm), label='Ingredients', min_entries=1, max_entries=15)
     steps = FieldList(FormField(StepForm), label='Steps', min_entries=1, max_entries=15)
 
-    submit = SubmitField('Create')
+    submit = SubmitField('Post')
