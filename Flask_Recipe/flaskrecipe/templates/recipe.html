@@ -13,10 +13,17 @@
             {% endif %}
         </div>
         <h2 class="article-title">{{ recipe.title }}</h2>
-        <p class="article-content">{{ recipe.description }}</p>
-        <ul>
+        <p class="lead">{{ recipe.description }}</p>
+        <p class="article-content"><strong>Ingredients</strong></p>
+        <ul class="text-muted list-unstyled">
           {% for item in recipe.ingredients %}
-            <li>{{ item.quantity }} {{item.quantity_label}} {{item.ingredient }}</li>
+            <li>{{ item.quantity }} {{ item.quantity_label }} {{ item.ingredient }}</li>
+          {% endfor %}
+        </ul>
+        <p class="article-content"><strong>Steps</strong></p>
+        <ol class="text-muted list-unstyled">
+          {% for item in recipe.steps %}
+            <li>{{ item.step_number }}. {{item.step}}</li>
           {% endfor %}
         </ul>
         </div>
