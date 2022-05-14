@@ -115,13 +115,13 @@ def update_recipe(recipe_id):
         recipe.description = form.description.data
         Ingredient.query.filter_by(recipe=recipe).delete()
         for field in form.ingredients:
-            ingredient = Ingredient(ingredient=field.ingredient.data, quantity=field.quantity.data, 
+            ingredient = Ingredient(ingredient=field.ingredient.data.capitalize(), quantity=field.quantity.data, 
                                     quantity_label=field.quantity_label.data, recipe=Recipe.query.filter_by(title=recipe.title).first())
             db.session.add(ingredient)
         Step.query.filter_by(recipe=recipe).delete()
         num = 1
         for field in form.steps:
-            step = Step(step=field.step.data, step_number=num, recipe=Recipe.query.filter_by(title=recipe.title).first())
+            step = Step(step=field.step.data.capitalize(), step_number=num, recipe=Recipe.query.filter_by(title=recipe.title).first())
             db.session.add(step)
             num += 1
         db.session.commit()
