@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, BooleanField, PasswordField, SubmitField, FloatField, IntegerField, TextAreaField, Form, FormField, FieldList
+from wtforms import StringField, BooleanField, PasswordField, SubmitField, FloatField, IntegerField, TextAreaField, Form, FormField, FieldList, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from flaskrecipe.models import User
 from flask_login import current_user
@@ -67,10 +67,12 @@ class StepForm(Form):
 
 
 class RecipeForm(FlaskForm):
+    myChoices = ['Breakfast', 'Lunch', 'Dinner', 'Dessert', 'Snack']
     title = StringField('Title', validators=[DataRequired()])
     time = IntegerField('Time in Minutes', validators=[DataRequired()])
+    category = SelectField('Meal Category', choices=myChoices, validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
-    ingredients = FieldList(FormField(IngredientForm), label='Ingredients', min_entries=1, max_entries=15)
-    steps = FieldList(FormField(StepForm), label='Steps', min_entries=1, max_entries=15)
+    ingredients = FieldList(FormField(IngredientForm), label='Ingredients', min_entries=1)
+    steps = FieldList(FormField(StepForm), label='Steps', min_entries=1)
 
     submit = SubmitField('Post')

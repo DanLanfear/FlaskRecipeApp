@@ -23,6 +23,7 @@ class Recipe(db.Model):
     title = db.Column(db.String(100), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     time = db.Column(db.Integer, nullable=False)
+    category = db.Column(db.String(10), nullable=False)
     description = db.Column(db.Text, nullable=False)
     ingredients = db.relationship('Ingredient', backref='recipe', lazy=True)
     steps = db.relationship('Step', backref='recipe', lazy=True)
