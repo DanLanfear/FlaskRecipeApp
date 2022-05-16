@@ -37,7 +37,7 @@ $(function() {
         var $this = $(this);
             
             //Add new entry
-        $this.find("button[data-toggle=fieldset-add-row]").click(function() {
+        $this.find("button[data-toggle=tag-add]").click(function() {
             var target = $($(this).data("target"))
             console.log(target);
             var oldentry = target.find("ul[data-toggle=tag]:last");
@@ -56,8 +56,9 @@ $(function() {
 
         //Remove row
         $this.find("li[data-toggle=tag-remove]").click(function() {
-            target_remove = $this.find("li[data-toggle=tag-remove]");
-            target_remove.remove();
+            // target_remove = $this.find("li[data-toggle=tag-remove]");
+            // target_remove.remove();
+            $(this).remove();
         }); //End remove row
     });
 });

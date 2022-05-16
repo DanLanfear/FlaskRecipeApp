@@ -155,6 +155,31 @@
                     </div>
                 {% endfor %}
             </div> -->
+        
+            <div class="form-group mb-4 mt-4" data-toggle="fieldset" id="tag-fieldset">
+                {{ form.tags.label(class="form-control-label ") }}
+                <div data-toggle="fieldset-entry">
+                    {% if tags.entries[0].tag.errors %}
+                        {{ tags.entries[0]tag(class="form-control is-invalid no-header") }}
+                        <div class="invalid-feedback">
+                            {% for error in tags.entries[0]tag.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ tags.entries[0].tag(class="no-header") }}
+                    {% endif %}
+                    <ul data-toggle="tag">
+                        {% for tag in form.tags.entries %}
+                            <li data-toggle="tag-remove">{{ tag.data }}</li>
+                        {% endfor %}                    
+                    </ul>
+                </div>
+                
+
+                <button class="btn btn-outline-primary mt-2" type="button" data-toggle="tag-add" data-target="#step-fieldset">Add</button>
+
+            </div>
         </fieldset>
         <div class="form-group">
             {{ form.submit(class="btn btn-outline-info") }}

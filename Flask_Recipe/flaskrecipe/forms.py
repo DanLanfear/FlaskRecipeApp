@@ -66,13 +66,18 @@ class StepForm(Form):
     step = TextAreaField('Step', validators=[DataRequired()] )
 
 
+class TagForm(Form):
+    tag = StringField('Tag', validators=[DataRequired(), Length(max=20)])
+
 class RecipeForm(FlaskForm):
     myChoices = ['Breakfast', 'Lunch', 'Dinner', 'Dessert', 'Snack']
     title = StringField('Title', validators=[DataRequired()])
     time = IntegerField('Time in Minutes', validators=[DataRequired()])
-    category = SelectField('Meal Category', choices=myChoices, validators=[DataRequired()])
+    # category = SelectField('Meal Category', choices=myChoices, validators=[DataRequired()])
+
     description = TextAreaField('Description', validators=[DataRequired()])
     ingredients = FieldList(FormField(IngredientForm), label='Ingredients', min_entries=1)
     steps = FieldList(FormField(StepForm), label='Steps', min_entries=1)
+    tag = FieldList(FormField(TagForm), label='Tags')
 
     submit = SubmitField('Post')
