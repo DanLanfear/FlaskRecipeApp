@@ -14,7 +14,8 @@
         </div>
         <h2 class="article-title">{{ recipe.title }}</h2>
         <span class="lead">{{ recipe.description }}</span>
-        <p class="text-muted"><em>Takes {{ recipe.time }} minutes</em></p>
+        <p class="text-muted">{{ recipe.category }}<br>
+          <em>Takes {{ recipe.time }} minutes</em></p>
         <hr>
         <p class="article-content h4"><strong>Ingredients</strong></p>
         <ul class="text-muted list-unstyled">

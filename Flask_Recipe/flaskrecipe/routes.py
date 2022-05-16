@@ -77,7 +77,7 @@ def account():
 def new_recipe():
     form = RecipeForm()
     if form.validate_on_submit():
-        recipe = Recipe(title=form.title.data, time=form.time.data, description = form.description.data, author=current_user)
+        recipe = Recipe(title=form.title.data, time=form.time.data, description = form.description.data, category=form.category.data, author=current_user)
         db.session.add(recipe)
         db.session.commit()
         for field in form.ingredients:
@@ -113,6 +113,7 @@ def update_recipe(recipe_id):
         recipe.title= form.title.data
         recipe.time = form.time.data
         recipe.description = form.description.data
+        recipe.category = form.category.data
         Ingredient.query.filter_by(recipe=recipe).delete()
         for field in form.ingredients:
             ingredient = Ingredient(ingredient=field.ingredient.data.capitalize(), quantity=field.quantity.data, 
@@ -132,6 +133,7 @@ def update_recipe(recipe_id):
         form.title.data = recipe.title
         form.time.data = recipe.time
         form.description.data = recipe.description
+        form.category.data = recipe.category
         ingredient_list = Ingredient.query.filter_by(recipe=recipe).all()
         form.ingredients.pop_entry()
         for ingredient in ingredient_list:
