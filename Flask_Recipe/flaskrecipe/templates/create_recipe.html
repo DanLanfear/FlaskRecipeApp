@@ -50,21 +50,6 @@
             {% endif %}
             </div>
 
-            <div class="form-group">
-                {{ form.category.label(class="form-control-label") }}
-
-                {% if form.category.errors %}
-                    {{ form.category(class="form-control form-control-lg is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.category.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    {{ form.category(class="form-control form-control-lg") }}
-                {% endif %}
-            </div>
-
             <div class="form-group border-bottom" data-toggle="fieldset" id="ingredient-fieldset">
                 {{ form.ingredients.label(class="form-control-label") }}
                 {% for ingredient in form.ingredients %}
@@ -156,18 +141,19 @@
                 {% endfor %}
             </div> -->
         
+            <!-- I'll have to use different method of verification for this shit god dammit -->
             <div class="form-group mb-4 mt-4" data-toggle="fieldset" id="tag-fieldset">
                 {{ form.tags.label(class="form-control-label ") }}
                 <div data-toggle="fieldset-entry">
-                    {% if tags.entries[0].tag.errors %}
-                        {{ tags.entries[0]tag(class="form-control is-invalid no-header") }}
+                    {% if form.tags.entries[0].tag.errors %}
+                        {{ form.tags.entries[0].tag(class="form-control is-invalid no-header") }}
                         <div class="invalid-feedback">
-                            {% for error in tags.entries[0]tag.errors %}
+                            {% for error in form.tags.entries[0].tag.errors %}
                                 <span>{{ error }}</span>
                             {% endfor %}
                         </div>
                     {% else %}
-                        {{ tags.entries[0].tag(class="no-header") }}
+                        {{ form.tags.entries[0].tag(class="no-header") }}
                     {% endif %}
                     <ul data-toggle="tag">
                         {% for tag in form.tags.entries %}

@@ -79,6 +79,6 @@ class RecipeForm(FlaskForm):
     description = TextAreaField('Description', validators=[DataRequired()])
     ingredients = FieldList(FormField(IngredientForm), label='Ingredients', min_entries=1)
     steps = FieldList(FormField(StepForm), label='Steps', min_entries=1)
-    tag = FieldList(FormField(TagForm), label='Tags')
+    tags = FieldList(FormField(TagForm), label='Tags')
 
     submit = SubmitField('Post')
