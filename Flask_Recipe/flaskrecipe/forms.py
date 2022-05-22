@@ -69,6 +69,7 @@ class StepForm(Form):
 class TagForm(Form):
     tag = StringField('Tag', validators=[DataRequired(), Length(max=20)])
 
+
 class RecipeForm(FlaskForm):
     myChoices = ['Breakfast', 'Lunch', 'Dinner', 'Dessert', 'Snack']
     title = StringField('Title', validators=[DataRequired()])

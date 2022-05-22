@@ -27,6 +27,7 @@ class Recipe(db.Model):
     description = db.Column(db.Text, nullable=False)
     ingredients = db.relationship('Ingredient', backref='recipe', lazy=True)
     steps = db.relationship('Step', backref='recipe', lazy=True)
+    tags = db.relationship('Tag', backref='recipe', lazy=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     
     def __repr__(self):
@@ -52,3 +53,10 @@ class Ingredient(db.Model):
     
     def __repr__(self):
         return f"Ingredient('{self.ingredient}', '{self.quantity} {self.quantity_label}')"
+
+
+class Tag(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipe.id'))
+    tag = db.Column(db.String, nullable=False)
+
