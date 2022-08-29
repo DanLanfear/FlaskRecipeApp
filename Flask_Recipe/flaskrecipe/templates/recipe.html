@@ -15,7 +15,18 @@
         <h2 class="article-title">{{ recipe.title }}</h2>
         <span class="lead">{{ recipe.description }}</span>
         <p class="text-muted">{{ recipe.category }}<br>
-          <em>Takes {{ recipe.time }} minutes</em></p>
+          {% if recipe.time >= 60 %}
+            <!-- split time into  hours and minutes maybe?-->
+            <em>
+              Takes {{ (recipe.hours }} hours 
+              {% if recipe.minutes > 0 %} 
+                and {{ recipe.time - ((recipe.time/60 | int)*60) }} minutes
+              {% endif %}
+            </em>
+          {% else %}
+            <em>Takes {{ recipe.time }} minutes</em>
+          {% endif %}
+        </p>
         <hr>
         <p class="article-content h4"><strong>Ingredients</strong></p>
         <ul class="text-muted list-unstyled">
